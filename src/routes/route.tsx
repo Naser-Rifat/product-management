@@ -1,31 +1,25 @@
-import { ErrorBoundary } from "react-error-boundary";
 import App from "../App";
-import { ErrorReturn } from "../components/common/ErrorBoundary";
 import { createBrowserRouter } from "react-router-dom";
-import ProductList from "../components/product";
 import ProductDetailContent from "../components/product/components/productDetailsContent";
+import ErrorBoundaryWrapper from "../components/common/ErrorBoundaryWrapper";
+import ProductList from "../components/product";
 
 const routes = createBrowserRouter([
   {
     path: "/",
     element: (
-      <ErrorBoundary
-        FallbackComponent={ErrorReturn}
-        onReset={() => (location.href = "/")}
-      >
+      <ErrorBoundaryWrapper>
         <App />
-      </ErrorBoundary>
+      </ErrorBoundaryWrapper>
     ),
     children: [
       {
         path:"/",
         element: <ProductList />,
-    
-        
       },
       { 
         path: "/products/:id",
-        element: <ProductDetailContent productId={0} />}
+        element: <ProductDetailContent />}
     ],
   },
 ]);

@@ -3,6 +3,11 @@ export interface EditProductContentProps {
   onClose: () => void;
 }
 
+
+export interface ProductDetailContentProps {
+  productId: number;
+}
+
 export interface Review {
     rating: number;
     comment: string;
@@ -52,5 +57,42 @@ export interface Review {
   export interface ProductsResponse {
     products: Product[];
     total: number;
+  }
+
+  export interface UpdateProductRequest {
+    id: number;
+    title?: string;
+    description?: string;
+    category?: string;
+    price?: number;
+    discountPercentage?: number;
+    rating?: number;
+    stock?: number;
+    brand?: string;
+    sku?: string;
+    weight?: string;
+    dimensions?: Partial<Dimensions>;
+    warrantyInformation?: string;
+    shippingInformation?: string;
+    availabilityStatus?: string;
+    returnPolicy?: string;
+    minimumOrderQuantity?: number;
+    meta?: Partial<Meta>;
+    reviews?: Review[];
+    thumbnail?: string;
+    images?: string[];
+  }
+  
+  export interface GetProductsResponse {
+    products: Product[];
+    total: number;
+    skip: number;
+    limit: number;
+  }
+  
+  // Define the type for the query parameters
+  export interface GetProductsQueryParams {
+    limit: number;
+    skip: number;
   }
   
