@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Select, Space, Spin, message } from 'antd';
+import { Form, Input, Button, Select, Spin, message } from 'antd';
 import { useGetProductByIdQuery, useUpdateProductMutation } from '../../../api/productHandlers';
 import { useGetCategoriesQuery } from '../../../api/categoryHandlers';
 import { Product } from '../../../types/product';
@@ -27,7 +27,6 @@ const EditProductContent: React.FC<EditProductContentProps> = ({ productId, onCl
     message.success('Product updated successfully');
     onClose();
   };
-console.log(categories)
   return (
     product && (
       <Form initialValues={product} onFinish={onFinish} layout="vertical">

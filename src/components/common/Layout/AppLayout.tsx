@@ -1,7 +1,7 @@
 import  { useState } from 'react'
 import {  Button, Layout, Menu, theme } from 'antd';
 
-import { MenuFoldOutlined, MenuUnfoldOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
 import Sider from 'antd/es/layout/Sider';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Header } from 'antd/es/layout/layout';
@@ -17,10 +17,7 @@ function AppLayout() {
   return (
     <>
        <Layout>
-      <Sider trigger={null} collapsible collapsed={collapsed} style={{
-        height: '100vh',
-        padding:'10px'
-      }}>
+      <Sider trigger={null} collapsible collapsed={collapsed} >
         <div style={{ display:'flex', justifyContent:'center', alignItems:'center', height: 32, margin: 16, background: 'rgba(255, 255, 255, 0.2)' , borderRadius: borderRadiusLG,  }} className="demo-logo-vertical">
           
           logo</div>
@@ -32,21 +29,10 @@ function AppLayout() {
             {
               key: '1',
               icon: <UserOutlined />,
-              label: 'nav 1',
+              label: 'Manage Product',
               onClick: () => navigate('/'),
             },
-            {
-              key: '2',
-              icon: <VideoCameraOutlined />,
-              label: 'nav 2',
-              onClick: () => navigate('/'),
-
-            },
-            {
-              key: '3',
-              icon: <UploadOutlined />,
-              label: 'nav 3',
-            },
+          
             
           ]}
         />

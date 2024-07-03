@@ -6,6 +6,7 @@ import EditProductContent from './components/EditProductContent';
 import GenericModal from '../common/modal';
 import { Product } from '../../types/product';
 import { DataSourceItemType } from 'antd/es/auto-complete';
+import { Content } from 'antd/es/layout/layout';
 
 
 const ProductList: React.FC = () => {
@@ -41,18 +42,26 @@ const ProductList: React.FC = () => {
     {
       title: "ID",
       dataIndex: "id",
+      
       key: "id",
+      width:"50px",
+      align:"center"
     },
     {
-      title: "image",
+      
+      title: "Image",
       key: "thumbnail",
+      align:"center",
+      width:"100px",
+
       render: (record: Product) => {
-        return <Image width={100} src={record?.thumbnail} />;
+        return <Image width={50} src={record?.thumbnail} />;
       },
     },
     {
       title: "Name",
       dataIndex: "title",
+      
       key: "title",
     },
 
@@ -85,11 +94,14 @@ const ProductList: React.FC = () => {
       title: "Availability Status",
       dataIndex: "availabilityStatus",
       key: "availabilityStatus",
+      align:"center",
+
     },
     {
       title: "Actions",
       key: "actions",
       fixed: "right",
+      align:"center",
       render: (record: Product) => (
         <Space size={"middle"}>
           <Button type="primary" onClick={() => handleViewDetails(record.id)}>
@@ -108,9 +120,16 @@ const ProductList: React.FC = () => {
 
   return (
     <>
-      <Row justify="center">
-        <Col span={20}>
-          <Table
+     
+         <Content style={{
+ margin: '24px 16px',
+ padding: 24,
+ minHeight: 280,
+
+
+         }} > 
+         <Table
+         size='small'
             columns={columns}
             dataSource={data?.products}
             pagination={{
@@ -120,8 +139,8 @@ const ProductList: React.FC = () => {
             }}
             rowKey="id"
           />
-        </Col>
-      </Row>
+         </Content>
+      
       <GenericModal
         visible={isModalVisible}
         onClose={handleModalClose}
