@@ -1,15 +1,13 @@
 import React from 'react';
-import { Modal, Spin, Descriptions, Row, Col } from 'antd';
+import { Spin, Descriptions, Row, Col } from 'antd';
 import { useGetProductByIdQuery } from '../../../api/productHandlers';
 
-interface ProductDetailModalProps {
-  productId: number | null;
-  visible: boolean;
-  onClose: () => void;
+interface ProductDetailContentProps {
+  productId: number;
 }
 
-const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ productId, visible, onClose }) => {
-  const { data, error, isLoading } = useGetProductByIdQuery(productId!, { skip: productId === null });
+const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ productId }) => {
+  const { data, error, isLoading } = useGetProductByIdQuery(productId);
 
   if (isLoading) {
     return <Spin tip="Loading..." />;
@@ -20,8 +18,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ productId, visi
   }
 
   return (
-    <Modal title="Product Details" visible={visible} onCancel={onClose} footer={null} width={1000}>
-      {data && (
+    data && (
         <Descriptions bordered layout="vertical" labelStyle={{ fontWeight: 'bold' }}>
           <Descriptions.Item label="Title"  >{data.title}</Descriptions.Item>
           <Descriptions.Item label="Description">{data.description}</Descriptions.Item>
@@ -69,9 +66,8 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ productId, visi
             <img src={data.thumbnail} alt="Thumbnail" style={{ width: '100px' }} />
           </Descriptions.Item>
         </Descriptions>
-      )}
-    </Modal>
+      )
   );
 };
 
-export default ProductDetailModal;
+export default ProductDetailContent;

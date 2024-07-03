@@ -63,7 +63,8 @@ function AppLayout() {
               height: 64,
             }}
           />
-        </Header>        <Outlet/>
+        </Header>      
+          <Outlet/>
       </Layout>
     </Layout>
     </>

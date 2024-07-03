@@ -3,7 +3,7 @@ import App from "../App";
 import { ErrorReturn } from "../components/common/Layout/ErrorBoundary";
 import { createBrowserRouter } from "react-router-dom";
 import ProductList from "../components/product";
-import ProductDetail from "../components/product/components/productDetails";
+import ProductDetailContent from "../components/product/components/productDetailsContent";
 
 const routes = createBrowserRouter([
   {
@@ -25,7 +25,7 @@ const routes = createBrowserRouter([
       },
       { 
         path: "/products/:id",
-        element: <ProductDetail />}
+        element: <ProductDetailContent productId={0} />}
     ],
   },
 ]);

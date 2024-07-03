@@ -1,3 +1,8 @@
+export interface EditProductContentProps {
+  productId: number;
+  onClose: () => void;
+}
+
 export interface Review {
     rating: number;
     comment: string;

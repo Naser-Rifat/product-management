@@ -1,55 +1,42 @@
-import React, { useState } from "react";
-import {
-  Table,
-  Spin,
-  message,
-  TableColumnsType,
-  Image,
-  Space,
-  Button,
-} from "antd";
-import { useGetProductsQuery } from "../../api/productHandlers";
-import { Content } from "antd/es/layout/layout";
-import { DataSourceItemType } from "antd/es/auto-complete";
-import { Product } from "../../types/product";
+import React, { useState } from 'react';
+import { Table, Button, Spin, message, Row, Col, Space, TableColumnsType, Image } from 'antd';
+import { useGetProductsQuery } from '../../api/productHandlers';
+import ProductDetailContent from './components/productDetailsContent';
+import EditProductContent from './components/EditProductContent';
+import GenericModal from '../common/modal';
+import { Product } from '../../types/product';
+import { DataSourceItemType } from 'antd/es/auto-complete';
 
-import ProductDetailModal from "./components/modal";
-import EditProductModal from "./components/editModal";
 
 const ProductList: React.FC = () => {
-  const { data, error, isLoading } = useGetProductsQuery({ limit: 0, skip: 0 });
-  const [selectedProductId, setSelectedProductId] = useState<number | null>(
-    null
-  );
-  const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const { data, error, isLoading } = useGetProductsQuery({ limit: 10, skip: 0 });
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalContent, setModalContent] = useState<React.ReactNode>(null);
 
   if (isLoading) return <Spin tip="Loading..." />;
   if (error) {
-    message.error("Failed to load products");
+    message.error('Failed to load products');
     return <div>Error loading products</div>;
   }
 
   const handleViewDetails = (productId: number) => {
-    setSelectedProductId(productId);
-    setIsDetailModalVisible(true);
+    setModalTitle('Product Details');
+    setModalContent(<ProductDetailContent productId={productId} />);
+    setIsModalVisible(true);
   };
 
   const handleEditProduct = (productId: number) => {
-    setSelectedProductId(productId);
-    setIsEditModalVisible(true);
+    setModalTitle('Edit Product');
+    setModalContent(<EditProductContent productId={productId} onClose={handleModalClose} />);
+    setIsModalVisible(true);
   };
 
-  const handleDetailModalClose = () => {
-    setSelectedProductId(null);
-    setIsDetailModalVisible(false);
+  const handleModalClose = () => {
+    setIsModalVisible(false);
   };
 
-  const handleEditModalClose = () => {
-    setSelectedProductId(null);
-    setIsEditModalVisible(false);
-  };
-
+  
   const columns: TableColumnsType<DataSourceItemType> = [
     {
       title: "ID",
@@ -120,39 +107,29 @@ const ProductList: React.FC = () => {
   ];
 
   return (
-    <Content
-      style={{
-        margin: "24px 16px",
-        padding: 24,
-        minHeight: 280,
-        // background: colorBgContainer,
-        // borderRadius: borderRadiusLG,
-      }}
-    >
-      <Table
-        size="small"
-        title={() => "Products"}
-        columns={columns}
-        dataSource={data?.products}
-        pagination={{
-          total: data?.total,
-          pageSize: 10,
-        }}
-        rowKey="id"
-      />
+    <>
+      <Row justify="center">
+        <Col span={20}>
+          <Table
+            columns={columns}
+            dataSource={data?.products}
+            pagination={{
+              total: data?.total,
+              pageSize: 10,
 
-      <ProductDetailModal
-        productId={selectedProductId}
-        visible={isDetailModalVisible}
-        onClose={handleDetailModalClose}
-      />
-
-      <EditProductModal
-        productId={selectedProductId}
-        visible={isEditModalVisible}
-        onClose={handleEditModalClose}
-      />
-    </Content>
+            }}
+            rowKey="id"
+          />
+        </Col>
+      </Row>
+      <GenericModal
+        visible={isModalVisible}
+        onClose={handleModalClose}
+        title={modalTitle}
+      >
+        {modalContent}
+      </GenericModal>
+    </>
   );
 };
 
